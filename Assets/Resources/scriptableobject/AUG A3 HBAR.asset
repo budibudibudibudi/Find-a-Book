@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e167e31d7b00e9f4f90267872b9f2bdb, type: 3}
+  m_Name: AUG A3 HBAR
+  m_EditorClassIdentifier: 
+  gun: {fileID: 8564072907417820059, guid: e87d1258a2993524aa04c9636f17bc44, type: 3}
+  maxmagazine: 30
+  currentmagazine: 30
+  stockmagazine: 180
+  damage: 10

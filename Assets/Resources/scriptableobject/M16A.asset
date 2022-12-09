@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e167e31d7b00e9f4f90267872b9f2bdb, type: 3}
+  m_Name: M16A
+  m_EditorClassIdentifier: 
+  gun: {fileID: 1118768939881106418, guid: 5da462c45c91e2e45b7b0489e14f9b44, type: 3}
+  maxmagazine: 40
+  currentmagazine: 40
+  stockmagazine: 360
+  damage: 10
