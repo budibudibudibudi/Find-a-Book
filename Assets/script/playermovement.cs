@@ -14,8 +14,9 @@ public class playermovement : MonoBehaviour
     private float grounddistance = 0.4f;
     private float jumpheight = 3f;
     private bool isgrounded;
-    private bool CanbeTarget = false;
+    public bool CanbeTarget = false;
 
+    [SerializeField] GameObject camHolder;
     public AudioClip[] all;
     public Transform groundcheck;
     public LayerMask groundmask;
@@ -29,10 +30,10 @@ public class playermovement : MonoBehaviour
     PhotonView view;
 
     private int health = 100;
-    public float stamina = 10;
-    public float regen_stamina = 1;
-    public float reduce_stamina = 2;
-    public bool canrun = false;
+    private float stamina = 10;
+    private float regen_stamina = 1;
+    private float reduce_stamina = 2;
+    private bool canrun = false;
     private void Awake()
     {
         view = GetComponent<PhotonView>();
@@ -40,6 +41,9 @@ public class playermovement : MonoBehaviour
         {
             Destroy(GetComponentInChildren<Camera>().gameObject);
         }
+
+        PhotonNetwork.NickName = PlayerPrefs.GetString("Player_Name");
+        view.TransferOwnership(PhotonNetwork.LocalPlayer);
     }
     //public Transform cam;
     // Start is called before the first frame update
@@ -50,18 +54,22 @@ public class playermovement : MonoBehaviour
         audiob = gameObject.AddComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
         nama.text = PlayerPrefs.GetString("Player_Name");
-        healthbar.value = health;
-        staminabar.value = stamina;
+        if (view.IsMine)
+        {
+            healthbar.value = health;
+            staminabar.value = stamina;
+
+        }
     }
 
 
 
     private void FixedUpdate()
     {
+        staminabar.value = stamina;
         if (view.IsMine)
         {
             bergerak();
-            staminabar.value = stamina;
 
             RaycastHit hit;
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 10f))

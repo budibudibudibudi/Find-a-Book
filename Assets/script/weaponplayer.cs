@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class weaponplayer : MonoBehaviour
 {
-    [HideInInspector] public itemclass mainWeapon;
+    private itemclass mainWeapon;
     public GameObject peluru;
     public Transform gunContainer;
     public Text peluruteks;
@@ -53,6 +53,7 @@ public class weaponplayer : MonoBehaviour
             {
                 mainWeapon = Resources.Load<itemclass>("scriptableobject/"+other.gameObject.name);
                 other.transform.SetParent(gunContainer);
+                other.GetComponent<PhotonView>().RPC("HideObject", RpcTarget.AllBuffered);
                 gunContainer.GetChild(0).transform.localPosition = Vector3.zero;
                 gunContainer.GetChild(0).transform.localRotation = Quaternion.Euler(Vector3.zero);
                 canshoot = true;
