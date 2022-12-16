@@ -535,6 +535,7 @@ MonoBehaviour:
   healthbar: {fileID: 1697685066256248382}
   staminabar: {fileID: 931461383767071979}
   nama: {fileID: 2652474577162017014}
+  view: {fileID: 0}
   health: 100
 --- !u!114 &1236934740597732207
 MonoBehaviour:
@@ -657,6 +658,7 @@ MonoBehaviour:
   peluruteks: {fileID: 7264365982519857434}
   bulletSpeed: 10
   range: 100
+  muzzle_flash: {fileID: 762055030515306408}
   canshoot: 1
 --- !u!1 &1057703165788436489
 GameObject:
@@ -2466,8 +2468,21 @@ PrefabInstance:
       propertyPath: m_Name
       value: M16A
       objectReference: {fileID: 0}
+    - target: {fileID: 5755299562989821896, guid: 5da462c45c91e2e45b7b0489e14f9b44, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 2.492
+      objectReference: {fileID: 0}
+    - target: {fileID: 5755299562990306280, guid: 5da462c45c91e2e45b7b0489e14f9b44, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5da462c45c91e2e45b7b0489e14f9b44, type: 3}
+--- !u!1 &762055030515306408 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5755299562990306280, guid: 5da462c45c91e2e45b7b0489e14f9b44, type: 3}
+  m_PrefabInstance: {fileID: 4993844885151124544}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4719994193798192392 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 346067714750206280, guid: 5da462c45c91e2e45b7b0489e14f9b44, type: 3}

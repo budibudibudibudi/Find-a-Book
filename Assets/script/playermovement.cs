@@ -27,7 +27,7 @@ public class playermovement : MonoBehaviour
     Vector3 velocity;
     Rigidbody rb;
     [SerializeField] TextMeshProUGUI nama;
-    PhotonView view;
+    [HideInInspector] public PhotonView view;
 
     public float health = 100;
     private float stamina = 10;
@@ -54,8 +54,6 @@ public class playermovement : MonoBehaviour
 
         view.TransferOwnership(PhotonNetwork.LocalPlayer);
     }
-    //public Transform cam;
-    // Start is called before the first frame update
     void Start()
     {
         controller = GetComponent<CharacterController>();
@@ -118,6 +116,11 @@ public class playermovement : MonoBehaviour
         else
             return;
     }
+
+    public void takedamage(float amount)
+    {
+        view.RPC("changehealth", RpcTarget.All, amount);
+    }
     void bergerak()
     {
         isgrounded = Physics.CheckSphere(groundcheck.position, grounddistance, groundmask);
@@ -175,21 +178,13 @@ public class playermovement : MonoBehaviour
                 CanbeTarget = true;
                 Destroy(other.gameObject);
             }
-            if (other.gameObject.tag == "peluru")
-            {
-                if (CanbeTarget)
-                {
-                    changehealth(-other.gameObject.GetComponent<peluruscript>().damage);
-                    Destroy(other.gameObject);
-                }
-                else
-                    Destroy(other.gameObject);
-            }
         }
     }
-
+    [PunRPC]
     public void changehealth(float amount)
     {
+        if(!view.IsMine)
+            return;
         health = Mathf.Clamp(health + amount, 0, 100);
         healthbar.value = health;
     }

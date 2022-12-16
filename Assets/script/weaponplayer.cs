@@ -12,6 +12,7 @@ public class weaponplayer : MonoBehaviourPun
     public Text peluruteks;
     public float bulletSpeed = 200;
     public float range = 100;
+    public GameObject muzzle_flash;
 
     public bool canshoot = false ;
     bool canreload;
@@ -31,7 +32,7 @@ public class weaponplayer : MonoBehaviourPun
                 if (mainWeapon != null)
                 {
                     if (mainWeapon.currentmagazine > 0)
-                        shoot();
+                        StartCoroutine(shoot());
                 }
             }
 
@@ -45,50 +46,25 @@ public class weaponplayer : MonoBehaviourPun
         }
     }
 
-    //private void OnTriggerEnter(Collider other)
-    //{
-    //    if(other.gameObject.tag == "senjata")
-    //    {
-    //        if(mainWeapon == null)
-    //        {
-    //            mainWeapon = Resources.Load<itemclass>("scriptableobject/"+other.gameObject.name);
-    //            GameObject go = PhotonNetwork.Instantiate("senjata/" + other.gameObject.name, transform.position, Quaternion.identity);
-    //            PhotonNetwork.Destroy(other.gameObject);
-    //            go.transform.SetParent(gunContainer);
-    //            go.transform.localPosition = Vector3.zero;
-    //            go.transform.localRotation = Quaternion.Euler(Vector3.zero);
-    //            canshoot = true;
-    //        }
-    //    }
-    //}
-
-    //[PunRPC]
-    //void DestroyObject(GameObject item)
-    //{
-    //    PhotonNetwork.Destroy(item);
-    //}
-    void shoot()
+    IEnumerator shoot()
     {
         if (canshoot)
         {
             RaycastHit hit;
             if (Physics.Raycast(GetComponentInChildren<Camera>().transform.position, GetComponentInChildren<Camera>().transform.forward, out hit, range))
             {
-                Debug.Log(hit.transform.name);
+                if(hit.transform.tag == "Player")
+                {
+                    hit.collider.gameObject.GetComponent<playermovement>().view.RPC("changehealth",RpcTarget.All,-2.5f);
+                }
+                muzzle_flash.SetActive(true);
+                mainWeapon.currentmagazine = Mathf.Clamp(mainWeapon.currentmagazine - 1, 0, mainWeapon.maxmagazine);
+                peluruteks.text = mainWeapon.currentmagazine + "/" + mainWeapon.stockmagazine;
+                this.GetComponent<playermovement>().a
+                canreload = true;
+                yield return new WaitForSeconds(0.1f);
+                muzzle_flash.SetActive(false);
             }
-            //GameObject temp = PhotonNetwork.Instantiate(peluru.name, gunContainer.GetChild(0).GetChild(0).transform.position, gunContainer.GetChild(0).GetChild(0).rotation); RaycastHit hit;
-            //if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit, Mathf.Infinity))
-            //{
-            //    temp.GetComponent<Rigidbody>().velocity = hit.point * bulletSpeed;
-            //}
-            //else
-            //{
-            //    temp.GetComponent<Rigidbody>().velocity = Camera.main.transform.forward * bulletSpeed;
-            //}
-
-            //mainWeapon.currentmagazine = Mathf.Clamp(mainWeapon.currentmagazine - 1, 0, mainWeapon.maxmagazine);
-            //peluruteks.text = mainWeapon.currentmagazine + "/" + mainWeapon.stockmagazine;
-            //canreload = true;
         }
     }
     public IEnumerator Reload()
