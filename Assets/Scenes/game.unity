@@ -12434,6 +12434,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f691bb613c6d67245a4b19d0349e2a8c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sensi: -1
+  rotate: {x: 0, y: 0, z: 0}
 --- !u!65 &1065855637
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -15080,11 +15082,6 @@ MonoBehaviour:
   waypointslot: {fileID: 38893608}
   buku: {fileID: 7939877826839478206, guid: f7e81d6d0685a99489a76af95211ba8d, type: 3}
   rand: 0
-  senjata:
-  - {fileID: 11400000, guid: 8af936cab9c575243ad50d8a3b46dcfd, type: 2}
-  - {fileID: 11400000, guid: b2048a1f7c78beb4e8756dafaed70b42, type: 2}
-  - {fileID: 11400000, guid: a80289856f0f98647809a04983da6385, type: 2}
-  - {fileID: 11400000, guid: c8de22f85c01b7b4281f1eaad17d8fcc, type: 2}
 --- !u!4 &1702572483
 Transform:
   m_ObjectHideFlags: 0

@@ -4,15 +4,13 @@ using UnityEngine;
 
 public class temporary : MonoBehaviour
 {
-    public GameObject camholder;
+    public float sensi = -1;
+    public Vector3 rotate;
     private void Update()
     {
-        transform.Rotate(Vector3.up * Input.GetAxisRaw("Mouse X") * 50);
-        float verticalrot = 0;
-        verticalrot += Input.GetAxisRaw("Mouse Y") * 50;
-        verticalrot = Mathf.Clamp(verticalrot, -90, 90);
-
-        camholder.transform.localEulerAngles = Vector3.left*verticalrot;
-        print(verticalrot);
+        float x = Input.GetAxisRaw("Mouse X");
+        float y = Input.GetAxisRaw("Mouse Y");
+        rotate = new Vector3(x, y * sensi, 0);
+        transform.eulerAngles = transform.eulerAngles - rotate;
     }
 }

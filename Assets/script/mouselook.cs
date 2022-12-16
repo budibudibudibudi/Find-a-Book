@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class mouselook : MonoBehaviour
 {
@@ -19,15 +20,34 @@ public class mouselook : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(!lockcamera)
+        if (playerbody.GetComponent<PhotonView>().IsMine)
         {
-            float mouseX = Input.GetAxis("Mouse X");
-            float mouseY = Input.GetAxis("Mouse Y");
-            xrotation -= mouseY * mousesensitifity * Time.deltaTime;
-            xrotation = Mathf.Clamp(xrotation, -90f, 90f);
+            if (!lockcamera)
+            {
+                float mouseX = Input.GetAxis("Mouse X");
+                float mouseY = Input.GetAxis("Mouse Y");
+                xrotation -= mouseY * mousesensitifity * Time.deltaTime;
+                xrotation = Mathf.Clamp(xrotation, -90f, 90f);
 
-            transform.localRotation = Quaternion.Euler(xrotation, 0f, 0f);
-            playerbody.Rotate(Vector3.up * mouseX * mousesensitifity * Time.deltaTime);
+                transform.localRotation = Quaternion.Euler(xrotation, 0f, 0f);
+                playerbody.Rotate(Vector3.up * mouseX * mousesensitifity * Time.deltaTime);
+            }
+
+            if (Input.GetKeyDown(KeyCode.Escape))
+            {
+                if (Cursor.lockState == CursorLockMode.Locked)
+                {
+                    Cursor.lockState = CursorLockMode.None;
+                }
+            }
+            else if (Input.GetMouseButtonDown(0))
+            {
+                if (Cursor.lockState == CursorLockMode.None)
+                {
+                    Cursor.lockState = CursorLockMode.Locked;
+                }
+
+            }
         }
     }
 }

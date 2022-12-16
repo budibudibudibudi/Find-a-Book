@@ -10,10 +10,4 @@ public class namatetapsenjata : MonoBehaviour
     {
         this.gameObject.name = nama;
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

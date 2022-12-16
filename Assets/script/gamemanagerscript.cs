@@ -11,7 +11,6 @@ public class gamemanagerscript : MonoBehaviour
     public static gamemanagerscript instance;
     public int rand;
 
-    public itemclass[] senjata;
     // Start is called before the first frame update
     void Awake()
     {
@@ -28,13 +27,6 @@ public class gamemanagerscript : MonoBehaviour
 
         rand = Random.Range(0, waypoint.Length);
         PhotonNetwork.Instantiate(buku.transform.name, waypoint[rand].transform.position, waypoint[rand].transform.rotation);
-        for (int i = 0; i < 10; i++)
-        {
-            int random = Random.Range(0, waypoint.Length);
-            int random_senjata = Random.Range(0, senjata.Length);
-            PhotonNetwork.Instantiate("senjata/" + senjata[random_senjata].gun.transform.name, waypoint[random].transform.position, senjata[random_senjata].gun.transform.rotation );
-
-        }
     }
 
 

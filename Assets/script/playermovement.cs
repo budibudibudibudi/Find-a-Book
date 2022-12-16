@@ -16,8 +16,8 @@ public class playermovement : MonoBehaviour
     private bool isgrounded;
     public bool CanbeTarget = false;
 
-    [SerializeField] GameObject camHolder;
     public AudioClip[] all;
+    public GameObject[] ui;
     public Transform groundcheck;
     public LayerMask groundmask;
     public Slider healthbar;
@@ -29,7 +29,7 @@ public class playermovement : MonoBehaviour
     [SerializeField] TextMeshProUGUI nama;
     PhotonView view;
 
-    private int health = 100;
+    public float health = 100;
     private float stamina = 10;
     private float regen_stamina = 1;
     private float reduce_stamina = 2;
@@ -37,12 +37,21 @@ public class playermovement : MonoBehaviour
     private void Awake()
     {
         view = GetComponent<PhotonView>();
+        PhotonNetwork.NickName = PlayerPrefs.GetString("Player_Name");
         if (!view.IsMine)
         {
             Destroy(GetComponentInChildren<Camera>().gameObject);
+            foreach (var item in ui)
+            {
+                Destroy(item);
+            }
+        }
+        else
+        {
+            healthbar.value = health;
+            staminabar.value = stamina;
         }
 
-        PhotonNetwork.NickName = PlayerPrefs.GetString("Player_Name");
         view.TransferOwnership(PhotonNetwork.LocalPlayer);
     }
     //public Transform cam;
@@ -53,23 +62,20 @@ public class playermovement : MonoBehaviour
         audioa = gameObject.AddComponent<AudioSource>();
         audiob = gameObject.AddComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
-        nama.text = PlayerPrefs.GetString("Player_Name");
-        if (view.IsMine)
-        {
-            healthbar.value = health;
-            staminabar.value = stamina;
 
-        }
+        nama.text = PhotonNetwork.NickName;
     }
 
 
 
     private void FixedUpdate()
     {
-        staminabar.value = stamina;
+        //staminabar.value = stamina;
         if (view.IsMine)
         {
             bergerak();
+            staminabar.value = stamina;
+            healthbar.value = health;
 
             RaycastHit hit;
             if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, 10f))
@@ -86,16 +92,16 @@ public class playermovement : MonoBehaviour
 
             if (stamina > 0)
                 canrun = true;
-            else if(stamina <= 0)
+            else if (stamina <= 0)
             {
                 canrun = false;
             }
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                if(canrun)
+                if (canrun)
                 {
                     speed = 10;
-                    stamina = Mathf.Clamp(stamina-reduce_stamina * Time.deltaTime,0,10);
+                    stamina = Mathf.Clamp(stamina - reduce_stamina * Time.deltaTime, 0, 10);
                 }
                 else
                 {
@@ -109,6 +115,8 @@ public class playermovement : MonoBehaviour
             }
 
         }
+        else
+            return;
     }
     void bergerak()
     {
@@ -148,33 +156,39 @@ public class playermovement : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "batas")
+        if (view.IsMine)
         {
-            FindObjectOfType<spawnplayer>().Start();
-            Destroy(gameObject);
+            if (collision.gameObject.tag == "batas")
+            {
+                FindObjectOfType<spawnplayer>().Start();
+                Destroy(gameObject);
+            }
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "buku")
+        if (view.IsMine)
         {
-            CanbeTarget = true;
-            Destroy(other.gameObject);
-        }
-        if (other.gameObject.tag == "peluru")
-        {
-            if (CanbeTarget)
+            if (other.gameObject.tag == "buku")
             {
-                changehealth(-other.gameObject.GetComponent<peluruscript>().damage);
+                CanbeTarget = true;
                 Destroy(other.gameObject);
             }
-            else
-                Destroy(other.gameObject);
+            if (other.gameObject.tag == "peluru")
+            {
+                if (CanbeTarget)
+                {
+                    changehealth(-other.gameObject.GetComponent<peluruscript>().damage);
+                    Destroy(other.gameObject);
+                }
+                else
+                    Destroy(other.gameObject);
+            }
         }
     }
 
-    public void changehealth(int amount)
+    public void changehealth(float amount)
     {
         health = Mathf.Clamp(health + amount, 0, 100);
         healthbar.value = health;

@@ -8,6 +8,11 @@ public class peluruscript : MonoBehaviour
 
     private void Start()
     {
-        Destroy(gameObject, 5);
+        //Destroy(gameObject, 5);
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        print(collision.gameObject.name);
     }
 }

@@ -233,13 +233,15 @@ GameObject:
   - component: {fileID: 282553741}
   - component: {fileID: 282553740}
   - component: {fileID: 282553739}
+  - component: {fileID: 282553743}
+  - component: {fileID: 282553744}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &282553739
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -319,6 +321,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &282553743
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282553737}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f691bb613c6d67245a4b19d0349e2a8c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sensi: -1
+  rotate: {x: 0, y: 0, z: 0}
+--- !u!54 &282553744
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 282553737}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 126
+  m_CollisionDetection: 0
 --- !u!1 &312678037
 GameObject:
   m_ObjectHideFlags: 0
@@ -428,6 +460,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 576145919}
+  - component: {fileID: 576145920}
   m_Layer: 0
   m_Name: camholder
   m_TagString: Untagged
@@ -451,6 +484,21 @@ Transform:
   m_Father: {fileID: 282553742}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &576145920
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576145918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 663b27438a0dd774d91a4ec3cbcb0a1a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerbody: {fileID: 576145919}
+  analog: {fileID: 0}
+  lockcamera: 0
 --- !u!1 &1929321152
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,7 +602,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1057703164661680731, guid: a4d8c3b7536dca74083570c3cd93c5bb, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1057703165709165359, guid: a4d8c3b7536dca74083570c3cd93c5bb, type: 3}
       propertyPath: m_RootOrder
@@ -606,7 +654,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1057703165709165777, guid: a4d8c3b7536dca74083570c3cd93c5bb, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1236934740597732207, guid: a4d8c3b7536dca74083570c3cd93c5bb, type: 3}
       propertyPath: sceneViewId
@@ -614,19 +662,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2788502991494959772, guid: a4d8c3b7536dca74083570c3cd93c5bb, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2788502991494959772, guid: a4d8c3b7536dca74083570c3cd93c5bb, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3085862753668486863, guid: a4d8c3b7536dca74083570c3cd93c5bb, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3085862753668486863, guid: a4d8c3b7536dca74083570c3cd93c5bb, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a4d8c3b7536dca74083570c3cd93c5bb, type: 3}
