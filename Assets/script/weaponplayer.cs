@@ -32,7 +32,11 @@ public class weaponplayer : MonoBehaviourPun
                 if (mainWeapon != null)
                 {
                     if (mainWeapon.currentmagazine > 0)
+                    {
                         StartCoroutine(shoot());
+
+                        this.GetComponent<playermovement>().audioa.PlayOneShot(GetComponent<playermovement>().all[2]);
+                    }
                 }
             }
 
@@ -57,14 +61,13 @@ public class weaponplayer : MonoBehaviourPun
                 {
                     hit.collider.gameObject.GetComponent<playermovement>().view.RPC("changehealth",RpcTarget.All,-2.5f);
                 }
-                muzzle_flash.SetActive(true);
-                mainWeapon.currentmagazine = Mathf.Clamp(mainWeapon.currentmagazine - 1, 0, mainWeapon.maxmagazine);
-                peluruteks.text = mainWeapon.currentmagazine + "/" + mainWeapon.stockmagazine;
-                this.GetComponent<playermovement>().a
-                canreload = true;
-                yield return new WaitForSeconds(0.1f);
-                muzzle_flash.SetActive(false);
             }
+            muzzle_flash.SetActive(true);
+            mainWeapon.currentmagazine = Mathf.Clamp(mainWeapon.currentmagazine - 1, 0, mainWeapon.maxmagazine);
+            peluruteks.text = mainWeapon.currentmagazine + "/" + mainWeapon.stockmagazine;
+            canreload = true;
+            yield return new WaitForSeconds(0.1f);
+            muzzle_flash.SetActive(false);
         }
     }
     public IEnumerator Reload()

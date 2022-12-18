@@ -525,6 +525,7 @@ MonoBehaviour:
   all:
   - {fileID: 8300000, guid: b2b3fcb1c21565c489783f4c6a937a20, type: 3}
   - {fileID: 8300000, guid: 4576aa35db83a9f4687edad0a6ab4829, type: 3}
+  - {fileID: 8300000, guid: 3061c7b9b32d894478e4126ccce25ca3, type: 3}
   ui:
   - {fileID: 7163066225819634806}
   - {fileID: 6294851323384910099}
@@ -534,6 +535,7 @@ MonoBehaviour:
     m_Bits: 8
   healthbar: {fileID: 1697685066256248382}
   staminabar: {fileID: 931461383767071979}
+  audioa: {fileID: 0}
   nama: {fileID: 2652474577162017014}
   view: {fileID: 0}
   health: 100

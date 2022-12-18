@@ -22,7 +22,7 @@ public class playermovement : MonoBehaviour
     public LayerMask groundmask;
     public Slider healthbar;
     public Slider staminabar;
-    AudioSource audioa;
+    [HideInInspector] public AudioSource audioa;
     AudioSource audiob;
     Vector3 velocity;
     Rigidbody rb;
