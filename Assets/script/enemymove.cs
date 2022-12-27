@@ -6,7 +6,7 @@ using UnityEngine;
 public class enemymove : MonoBehaviour
 {
     NavMeshAgent nm;
-    GameObject target;
+    GameObject[] target;
     public Transform cam;
     gamemanagerscript gms;
 
@@ -23,34 +23,37 @@ public class enemymove : MonoBehaviour
 
     private void Update() {
         
-        target = GameObject.FindGameObjectWithTag("Player");
-        if (target != null)
+        target = GameObject.FindGameObjectsWithTag("Player");
+        for (int i = 0; i < target.Length; i++)
         {
-            if (Vector3.Distance(transform.position, target.transform.position) <= 30f)
+            if (target[i] != null)
             {
-                nm.SetDestination(target.transform.position);
+                if (Vector3.Distance(transform.position, target[i].transform.position) <= 30f)
+                {
+                    nm.SetDestination(target[i].transform.position);
+                }
+                else
+                {
+                    nm.SetDestination(gms.waypoint[randomspot].transform.position);
+                    cariwaypoint();
+                }
             }
             else
             {
                 nm.SetDestination(gms.waypoint[randomspot].transform.position);
                 cariwaypoint();
             }
-        }
-        else
-        {
-            nm.SetDestination(gms.waypoint[randomspot].transform.position);
-            cariwaypoint();
+            if (Vector3.Distance(transform.position, target[i].transform.position) <= 10)
+            {
+                this.transform.SetParent(target[i].transform.Find("jumpscare"));
+                this.transform.localPosition = Vector3.zero;
+                target[i].transform.Find("Spot Light").gameObject.SetActive(false);
+                target[i].transform.Find("Main Camera").transform.position = new Vector3(0, 1.553f, 0);
+                target[i].transform.Find("Main Camera").GetComponent<mouselook>().lockcamera = true;
+                StartCoroutine(jumpscare(target[i]));
+            }
         }
 
-        if(Vector3.Distance(transform.position,target.transform.position)<=10)
-        {
-            this.transform.SetParent(target.transform.Find("jumpscare"));
-            this.transform.localPosition = Vector3.zero;
-            target.transform.Find("Spot Light").gameObject.SetActive(false);
-            target.transform.Find("Main Camera").transform.position = new Vector3(0, 1.553f, 0);
-            target.transform.Find("Main Camera").GetComponent<mouselook>().lockcamera = true;
-            StartCoroutine(gamemanagerscript.instance.restart_game(target));
-        }
     }
 
     bool cariwaypoint()
@@ -72,5 +75,11 @@ public class enemymove : MonoBehaviour
         }
 
         return true;
+    }
+    IEnumerator jumpscare(GameObject target)
+    {
+        yield return new WaitForSeconds(2);
+        Destroy(target);
+        FindObjectOfType<spawnplayer>().bangkit(target);
     }
 }

@@ -14,7 +14,7 @@ public class playermovement : MonoBehaviour
     private float grounddistance = 0.4f;
     private float jumpheight = 3f;
     private bool isgrounded;
-    public bool CanbeTarget = false;
+    public bool CanbeTarget;
 
     public AudioClip[] all;
     public GameObject[] ui;
@@ -28,11 +28,12 @@ public class playermovement : MonoBehaviour
     Rigidbody rb;
     [SerializeField] TextMeshProUGUI nama;
     [HideInInspector] public PhotonView view;
+    public GameObject crown;
 
-    public float health = 100;
-    private float stamina = 10;
-    private float regen_stamina = 1;
-    private float reduce_stamina = 2;
+    private float health;
+    private float stamina;
+    private float regen_stamina;
+    private float reduce_stamina;
     private bool canrun = false;
     private void Awake()
     {
@@ -60,7 +61,11 @@ public class playermovement : MonoBehaviour
         audioa = gameObject.AddComponent<AudioSource>();
         audiob = gameObject.AddComponent<AudioSource>();
         rb = GetComponent<Rigidbody>();
-
+        health = 100;
+        stamina = 10;
+        regen_stamina = 1;
+        reduce_stamina = 2;
+        CanbeTarget = false;
         nama.text = PhotonNetwork.NickName;
     }
 
@@ -163,8 +168,7 @@ public class playermovement : MonoBehaviour
         {
             if (collision.gameObject.tag == "batas")
             {
-                FindObjectOfType<spawnplayer>().Start();
-                Destroy(gameObject);
+                death();
             }
         }
     }
@@ -176,6 +180,7 @@ public class playermovement : MonoBehaviour
             if (other.gameObject.tag == "buku")
             {
                 CanbeTarget = true;
+                crown.SetActive(true);
                 Destroy(other.gameObject);
             }
         }
@@ -187,6 +192,10 @@ public class playermovement : MonoBehaviour
             return;
         health = Mathf.Clamp(health + amount, 0, 100);
         healthbar.value = health;
+        if(health <= 0)
+        {
+            death();
+        }
     }
     public void jump()
     {
@@ -194,5 +203,17 @@ public class playermovement : MonoBehaviour
             velocity.y = Mathf.Sqrt(jumpheight * -2f * gravity);
     }
 
-    
+    public void death()
+    {
+        if (!view.IsMine)
+            return;
+        FindObjectOfType<spawnplayer>().bangkit(this.gameObject);
+        if (CanbeTarget)
+        {
+            PhotonNetwork.Instantiate(FindObjectOfType<gamemanagerscript>().buku.name, this.transform.position, Quaternion.identity);
+        }
+        else
+            return;
+        Destroy(gameObject);
+    }
 }

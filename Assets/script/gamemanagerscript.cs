@@ -18,6 +18,12 @@ public class gamemanagerscript : MonoBehaviour
         {
             instance = this;
         }
+        Application.targetFrameRate = 60;
+#if UNITY_EDITOR
+        Debug.unityLogger.logEnabled = true;
+#else
+  Debug.unityLogger.logEnabled = false;
+#endif
     }
     private void Start()
     {
@@ -28,13 +34,4 @@ public class gamemanagerscript : MonoBehaviour
         rand = Random.Range(0, waypoint.Length);
         PhotonNetwork.Instantiate(buku.transform.name, waypoint[rand].transform.position, waypoint[rand].transform.rotation);
     }
-
-
-    public IEnumerator restart_game(GameObject target)
-    {
-        yield return new WaitForSeconds(2);
-        Destroy(target);
-        FindObjectOfType<spawnplayer>().Start();
-    }
-
 }

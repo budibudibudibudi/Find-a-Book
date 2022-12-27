@@ -13,6 +13,7 @@ public class weaponplayer : MonoBehaviourPun
     public float bulletSpeed = 200;
     public float range = 100;
     public GameObject muzzle_flash;
+    public GameObject crosshair;
 
     public bool canshoot = false ;
     bool canreload;
@@ -59,7 +60,11 @@ public class weaponplayer : MonoBehaviourPun
             {
                 if(hit.transform.tag == "Player")
                 {
-                    hit.collider.gameObject.GetComponent<playermovement>().view.RPC("changehealth",RpcTarget.All,-2.5f);
+                    if (hit.transform.GetComponent<playermovement>().CanbeTarget)
+                    {
+                        hit.collider.gameObject.GetComponent<playermovement>().view.RPC("changehealth", RpcTarget.All, -2.5f);
+                        crosshair.SetActive(true);
+                    }
                 }
             }
             muzzle_flash.SetActive(true);
@@ -68,6 +73,7 @@ public class weaponplayer : MonoBehaviourPun
             canreload = true;
             yield return new WaitForSeconds(0.1f);
             muzzle_flash.SetActive(false);
+            crosshair.SetActive(false);
         }
     }
     public IEnumerator Reload()
