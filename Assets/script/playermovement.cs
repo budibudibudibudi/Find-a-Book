@@ -5,7 +5,7 @@ using Photon.Pun;
 using UnityEngine.UI;
 using TMPro;
 
-public class playermovement : MonoBehaviour
+public class playermovement : MonoBehaviourPun
 {
     CharacterController controller;
 
@@ -15,6 +15,13 @@ public class playermovement : MonoBehaviour
     private float jumpheight = 3f;
     private bool isgrounded;
     public bool CanbeTarget;
+    private float health;
+    private float stamina;
+    private float regen_stamina;
+    private float reduce_stamina;
+    [HideInInspector] public bool canrun = false;
+    [HideInInspector] public bool pause;
+    public bool impostor;
 
     public AudioClip[] all;
     public GameObject[] ui;
@@ -29,12 +36,10 @@ public class playermovement : MonoBehaviour
     [SerializeField] TextMeshProUGUI nama;
     [HideInInspector] public PhotonView view;
     public GameObject crown;
+    public GameObject pausepanel;
 
-    private float health;
-    private float stamina;
-    private float regen_stamina;
-    private float reduce_stamina;
-    private bool canrun = false;
+    public Animator questanim;
+
     private void Awake()
     {
         view = GetComponent<PhotonView>();
@@ -45,13 +50,14 @@ public class playermovement : MonoBehaviour
             foreach (var item in ui)
             {
                 Destroy(item);
-            }
+            }   
         }
         else
         {
             healthbar.value = health;
             staminabar.value = stamina;
         }
+
 
         view.TransferOwnership(PhotonNetwork.LocalPlayer);
     }
@@ -65,12 +71,37 @@ public class playermovement : MonoBehaviour
         stamina = 10;
         regen_stamina = 1;
         reduce_stamina = 2;
-        CanbeTarget = false;
         nama.text = PhotonNetwork.NickName;
     }
 
 
-
+    private void Update()
+    {
+        if(view.IsMine)
+        {
+            if(Input.GetKeyDown(KeyCode.Escape))
+            {
+                if(!pause)
+                {
+                    pause = true;
+                    pausepanel.SetActive(true);
+                    Cursor.lockState = CursorLockMode.None;
+                    canrun = false;
+                    GetComponent<weaponplayer>().canshoot = false;
+                    GetComponent<weaponplayer>().canreload = false;
+                }
+                else
+                {
+                    pausepanel.SetActive(false);
+                    Cursor.lockState = CursorLockMode.Locked;
+                    canrun = true;
+                    GetComponent<weaponplayer>().canshoot = true;
+                    GetComponent<weaponplayer>().canreload = true;
+                    pause = false;
+                }
+            }
+        }
+    }
     private void FixedUpdate()
     {
         //staminabar.value = stamina;
@@ -93,7 +124,7 @@ public class playermovement : MonoBehaviour
             rb.velocity = Vector3.zero;
 
 
-            if (stamina > 0)
+            if (stamina > 0 && !pause)
                 canrun = true;
             else if (stamina <= 0)
             {
@@ -168,6 +199,7 @@ public class playermovement : MonoBehaviour
         {
             if (collision.gameObject.tag == "batas")
             {
+                gamemanagerscript.instance.Start();
                 death();
             }
         }
@@ -179,11 +211,21 @@ public class playermovement : MonoBehaviour
         {
             if (other.gameObject.tag == "buku")
             {
-                CanbeTarget = true;
-                crown.SetActive(true);
-                Destroy(other.gameObject);
+                activecrown();
+                gamemanagerscript.instance.gameStart = true;
             }
         }
+    }
+    void activecrown()
+    {
+        view.RPC("test1", RpcTarget.All);
+    }
+
+    [PunRPC]
+    void test1()
+    {
+        crown.SetActive(true);
+        impostor = true;
     }
     [PunRPC]
     public void changehealth(float amount)
@@ -192,8 +234,11 @@ public class playermovement : MonoBehaviour
             return;
         health = Mathf.Clamp(health + amount, 0, 100);
         healthbar.value = health;
+        AudioSource audioc = gameObject.AddComponent<AudioSource>();
+        audioc.PlayOneShot(all[3]);
         if(health <= 0)
         {
+            gamemanagerscript.instance.Start();
             death();
         }
     }
@@ -207,13 +252,35 @@ public class playermovement : MonoBehaviour
     {
         if (!view.IsMine)
             return;
-        FindObjectOfType<spawnplayer>().bangkit(this.gameObject);
-        if (CanbeTarget)
+        if(impostor)
         {
-            PhotonNetwork.Instantiate(FindObjectOfType<gamemanagerscript>().buku.name, this.transform.position, Quaternion.identity);
+            gamemanagerscript.instance._timer.enabled = false;
+        }
+        FindObjectOfType<spawnplayer>().bangkit(this.gameObject);
+    }
+
+    public void alert()
+    {
+        view.RPC("alert1", RpcTarget.All);
+    }
+    [PunRPC]
+    void alert1()
+    {
+        if (!view.IsMine)
+            return;
+
+        if (impostor)
+        {
+            questanim.SetInteger("pemegangbuku", 2);
         }
         else
-            return;
-        Destroy(gameObject);
+        {
+            questanim.SetInteger("pemegangbuku", 1);
+        }
+        StartCoroutine(gamemanagerscript.instance.shoutalert());
+        gamemanagerscript.instance._timer.enabled = true;
+        PhotonNetwork.Destroy(GameObject.FindGameObjectWithTag("buku"));
+        gamemanagerscript.instance.gameStart = false;
+
     }
 }

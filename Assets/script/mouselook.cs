@@ -33,21 +33,6 @@ public class mouselook : MonoBehaviour
                 playerbody.Rotate(Vector3.up * mouseX * mousesensitifity * Time.deltaTime);
             }
 
-            if (Input.GetKeyDown(KeyCode.Escape))
-            {
-                if (Cursor.lockState == CursorLockMode.Locked)
-                {
-                    Cursor.lockState = CursorLockMode.None;
-                }
-            }
-            else if (Input.GetMouseButtonDown(0))
-            {
-                if (Cursor.lockState == CursorLockMode.None)
-                {
-                    Cursor.lockState = CursorLockMode.Locked;
-                }
-
-            }
         }
     }
 }

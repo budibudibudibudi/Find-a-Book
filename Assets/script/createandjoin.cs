@@ -3,16 +3,28 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
+using Photon.Realtime;
 
 public class createandjoin : MonoBehaviourPunCallbacks
 {
-    public Text jumlahplayertext;
     public InputField input_nama;
     public GameObject inputerror;
+    private void Start()
+    {
+
+#if UNITY_EDITOR
+        Debug.unityLogger.logEnabled = true;
+#else
+  Debug.unityLogger.logEnabled = false;
+#endif
+    }
     public void CreateRoom()
     {
         if (input_nama.text == "")
+        {
             inputerror.SetActive(true);
+            inputerror.GetComponent<Text>().text = "NAMA TIDAK BOLEH KOSONG";
+        }
         else
         {
             PlayerPrefs.SetString("Player_Name", input_nama.text);
@@ -24,6 +36,7 @@ public class createandjoin : MonoBehaviourPunCallbacks
         if (input_nama.text == "")
         {
             inputerror.SetActive(true);
+            inputerror.GetComponent<Text>().text = "NAMA TIDAK BOLEH KOSONG";
         }
         else
         {
@@ -36,9 +49,8 @@ public class createandjoin : MonoBehaviourPunCallbacks
         PhotonNetwork.LoadLevel("game");
     }
 
-    private void Start()
+    public void Quit()
     {
-        jumlahplayertext.text = jumlahplayertext.text + PhotonNetwork.CountOfPlayersInRooms.ToString() + "/20";
-
+        Application.Quit();
     }
 }

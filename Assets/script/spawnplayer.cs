@@ -7,6 +7,7 @@ public class spawnplayer : MonoBehaviour
 {
     [SerializeField] GameObject player;
     [SerializeField] Transform[] spawnposmusuh;
+    PhotonView view;
     // Start is called before the first frame update
     public void Start()
     {
@@ -14,11 +15,11 @@ public class spawnplayer : MonoBehaviour
         PhotonNetwork.Instantiate(player.name, randompost, Quaternion.identity);
     }
 
-    [PunRPC]
     public void bangkit(GameObject _player)
     {
         Vector3 randompost = new Vector3(Random.Range(52.4f, -60.5f), 30, Random.Range(52.4f, -34.9f));
-        PhotonNetwork.Instantiate(_player.name, randompost, Quaternion.identity);
+        PhotonNetwork.Instantiate("player", randompost, Quaternion.identity);
+        PhotonNetwork.Destroy(_player);
     }
     // spawn hantu
     //void spawningmusuh()

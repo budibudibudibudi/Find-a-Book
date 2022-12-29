@@ -45,11 +45,6 @@ public class enemymove : MonoBehaviour
             }
             if (Vector3.Distance(transform.position, target[i].transform.position) <= 10)
             {
-                this.transform.SetParent(target[i].transform.Find("jumpscare"));
-                this.transform.localPosition = Vector3.zero;
-                target[i].transform.Find("Spot Light").gameObject.SetActive(false);
-                target[i].transform.Find("Main Camera").transform.position = new Vector3(0, 1.553f, 0);
-                target[i].transform.Find("Main Camera").GetComponent<mouselook>().lockcamera = true;
                 StartCoroutine(jumpscare(target[i]));
             }
         }
@@ -78,8 +73,12 @@ public class enemymove : MonoBehaviour
     }
     IEnumerator jumpscare(GameObject target)
     {
+        this.transform.SetParent(target.transform.Find("jumpscare"));
+        this.transform.localPosition = Vector3.zero;
+        target.GetComponent<playermovement>().enabled = false;
         yield return new WaitForSeconds(2);
-        Destroy(target);
+        target.transform.Find("jumpscare").DetachChildren();
+        gamemanagerscript.instance.Start();
         FindObjectOfType<spawnplayer>().bangkit(target);
     }
 }

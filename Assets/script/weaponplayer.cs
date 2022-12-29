@@ -14,15 +14,17 @@ public class weaponplayer : MonoBehaviourPun
     public float range = 100;
     public GameObject muzzle_flash;
     public GameObject crosshair;
+    public Animator reloadslider;
 
-    public bool canshoot = false ;
-    bool canreload;
+    [HideInInspector] public bool canshoot = true;
+    [HideInInspector] public bool canreload;
 
     private void Start()
     {
         if(GetComponent<PhotonView>().IsMine)
             if(mainWeapon != null)
                 peluruteks.text = mainWeapon.currentmagazine + "/" + mainWeapon.stockmagazine;
+
     }
     private void Update()
     {
@@ -79,12 +81,14 @@ public class weaponplayer : MonoBehaviourPun
     public IEnumerator Reload()
     {
         canshoot = false;
+        canreload = false;
+        reloadslider.SetBool("startreload",true);
         yield return new WaitForSeconds(3);
         mainWeapon.stockmagazine += mainWeapon.currentmagazine - mainWeapon.maxmagazine;
         mainWeapon.currentmagazine = Mathf.Clamp(mainWeapon.maxmagazine, 0, mainWeapon.stockmagazine);
         peluruteks.text = mainWeapon.currentmagazine + "/" + mainWeapon.stockmagazine;
-        canreload = false;
         canshoot = true;
+        reloadslider.SetBool("startreload", false);
     }
 
 }

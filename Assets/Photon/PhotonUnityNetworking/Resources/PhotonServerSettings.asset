@@ -42,6 +42,10 @@ MonoBehaviour:
   - DestroyObject
   - changehealth
   - bangkit
+  - death
+  - activedObject
+  - test1
+  - alert1
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
