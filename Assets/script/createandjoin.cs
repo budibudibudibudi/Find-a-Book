@@ -11,7 +11,7 @@ public class createandjoin : MonoBehaviourPunCallbacks
     public GameObject inputerror;
     private void Start()
     {
-
+        input_nama.characterLimit = 5;
 #if UNITY_EDITOR
         Debug.unityLogger.logEnabled = true;
 #else

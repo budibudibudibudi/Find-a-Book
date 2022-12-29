@@ -15980,7 +15980,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_SizeDelta: {x: 132.1951, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1862168153
 MonoBehaviour:
@@ -16080,8 +16080,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 23
-  m_fontSizeBase: 23
+  m_fontSize: 12.96
+  m_fontSizeBase: 12.96
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -16142,6 +16142,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8e566126bc73d6d43a933d3ee9b7097a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timertext: {fileID: 0}
 --- !u!1 &1863963558 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 4563446314866129742, guid: fd1d1573a9b4911478b3b04550f99ff4, type: 3}

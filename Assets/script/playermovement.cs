@@ -283,4 +283,19 @@ public class playermovement : MonoBehaviourPun
         gamemanagerscript.instance.gameStart = false;
 
     }
+
+    public void win(string winner)
+    {
+        view.RPC("pemenang", RpcTarget.All,winner);
+    }
+
+    [PunRPC]
+    void pemenang(string winner)
+    {
+        gamemanagerscript.instance._timer.timertext.text = "pemenangnya = " + winner;
+        pausepanel.SetActive(true);
+        pausepanel.transform.GetChild(0).gameObject.SetActive(false);
+        pausepanel.transform.GetChild(1).gameObject.SetActive(false);
+        this.enabled = false;
+    }
 }
