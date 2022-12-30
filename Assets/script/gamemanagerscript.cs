@@ -19,7 +19,7 @@ public class gamemanagerscript : MonoBehaviourPunCallbacks
         {
             instance = this;
         }
-        Application.targetFrameRate = 60;
+        Application.targetFrameRate = 30;
 #if UNITY_EDITOR
         Debug.unityLogger.logEnabled = true;
 #else
