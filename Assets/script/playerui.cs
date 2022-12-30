@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class playerui : MonoBehaviour
+public class playerui : MonoBehaviourPunCallbacks
 {
     public void resume()
     {
@@ -26,6 +26,7 @@ public class playerui : MonoBehaviour
     }
     public void quit()
     {
-        Application.Quit();
+        PhotonNetwork.LeaveRoom();
+        PhotonNetwork.LoadLevel("lobby");
     }
 }

@@ -11,7 +11,7 @@ public class timer : MonoBehaviour
     private void OnEnable()
     {
         timertext = GetComponent<TextMeshProUGUI>();
-        timerr = 60;
+        timerr = 5;
     }
 
     // Update is called once per frame

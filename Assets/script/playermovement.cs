@@ -296,6 +296,7 @@ public class playermovement : MonoBehaviourPun
         pausepanel.SetActive(true);
         pausepanel.transform.GetChild(0).gameObject.SetActive(false);
         pausepanel.transform.GetChild(1).gameObject.SetActive(false);
+        Cursor.lockState = CursorLockMode.None;
         this.enabled = false;
     }
 }

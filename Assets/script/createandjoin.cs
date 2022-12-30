@@ -9,6 +9,7 @@ public class createandjoin : MonoBehaviourPunCallbacks
 {
     public InputField input_nama;
     public GameObject inputerror;
+    public int jumlahplayer;
     private void Start()
     {
         input_nama.characterLimit = 5;
@@ -47,6 +48,21 @@ public class createandjoin : MonoBehaviourPunCallbacks
     public override void OnJoinedRoom()
     {
         PhotonNetwork.LoadLevel("game");
+    }
+    private void Update()
+    {
+        if(PhotonNetwork.CountOfPlayersInRooms>0)
+        {
+            GameObject.Find("Canvas/bg/create").SetActive(false);
+            GameObject.Find("Canvas/bg/join").SetActive(true);
+        }
+        else
+        {
+            GameObject.Find("Canvas/bg/create").SetActive(true);
+            GameObject.Find("Canvas/bg/join").SetActive(false);
+
+        }
+        jumlahplayer = PhotonNetwork.CountOfPlayersInRooms;
     }
 
     public void Quit()
