@@ -1,16 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using UnityEngine.UI;
 
 public class timer : MonoBehaviour
 {
     private float timerr;
-    [HideInInspector] public TextMeshProUGUI timertext;
+    [HideInInspector] public Text timertext;
     // Start is called before the first frame update
     private void OnEnable()
     {
-        timertext = GetComponent<TextMeshProUGUI>();
+        timertext = GetComponent<Text>();
         timerr = 60;
     }
 

@@ -37,7 +37,7 @@ public class playermovement : MonoBehaviourPun
     [HideInInspector] public PhotonView view;
     public GameObject crown;
     public GameObject pausepanel;
-
+    public timer _timer;
     public Animator questanim;
 
     private void Awake()
@@ -254,7 +254,7 @@ public class playermovement : MonoBehaviourPun
             return;
         if(impostor)
         {
-            gamemanagerscript.instance._timer.enabled = false;
+            _timer.enabled = false;
         }
         FindObjectOfType<spawnplayer>().bangkit(this.gameObject);
     }
@@ -278,7 +278,7 @@ public class playermovement : MonoBehaviourPun
             questanim.SetInteger("pemegangbuku", 1);
         }
         StartCoroutine(gamemanagerscript.instance.shoutalert());
-        gamemanagerscript.instance._timer.enabled = true;
+        _timer.enabled = true;
         PhotonNetwork.Destroy(GameObject.FindGameObjectWithTag("buku"));
         gamemanagerscript.instance.gameStart = false;
 
@@ -292,7 +292,7 @@ public class playermovement : MonoBehaviourPun
     [PunRPC]
     void pemenang(string winner)
     {
-        gamemanagerscript.instance._timer.timertext.text = "pemenangnya = " + winner;
+        _timer.timertext.text = "pemenangnya = " + winner;
         pausepanel.SetActive(true);
         pausepanel.transform.GetChild(0).gameObject.SetActive(false);
         pausepanel.transform.GetChild(1).gameObject.SetActive(false);

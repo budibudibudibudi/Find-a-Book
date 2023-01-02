@@ -14,6 +14,10 @@ public class enemymove : MonoBehaviour
     public float startwait = 3;
 
     public int randomspot;
+    private void Awake()
+    {
+        this.enabled = false;
+    }
     private void Start() {
         waittime = startwait;
         gms = FindObjectOfType<gamemanagerscript>();

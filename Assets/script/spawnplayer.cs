@@ -6,6 +6,7 @@ using Photon.Pun;
 public class spawnplayer : MonoBehaviour
 {
     [SerializeField] GameObject player;
+    [SerializeField] GameObject musuh;
     [SerializeField] Transform[] spawnposmusuh;
     PhotonView view;
     // Start is called before the first frame update
@@ -22,9 +23,9 @@ public class spawnplayer : MonoBehaviour
         PhotonNetwork.Destroy(_player);
     }
     // spawn hantu
-    //void spawningmusuh()
-    //{
-    //    int rand = Random.Range(0, spawnposmusuh.Length);
-    //    PhotonNetwork.Instantiate(musuh.name, spawnposmusuh[rand].position, Quaternion.identity);
-    //}
+    public void spawningmusuh()
+    {
+        int rand = Random.Range(0, spawnposmusuh.Length);
+        PhotonNetwork.InstantiateRoomObject(musuh.name, spawnposmusuh[rand].position, Quaternion.identity);
+    }
 }
