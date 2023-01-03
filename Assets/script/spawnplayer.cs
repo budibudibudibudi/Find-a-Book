@@ -25,7 +25,10 @@ public class spawnplayer : MonoBehaviour
     // spawn hantu
     public void spawningmusuh()
     {
-        int rand = Random.Range(0, spawnposmusuh.Length);
-        PhotonNetwork.InstantiateRoomObject(musuh.name, spawnposmusuh[rand].position, Quaternion.identity);
+        for (int i = 0; i < 2; i++)
+        {
+            int rand = Random.Range(0, spawnposmusuh.Length);
+            PhotonNetwork.InstantiateRoomObject(musuh.name, spawnposmusuh[rand].position, Quaternion.identity);
+        }
     }
 }

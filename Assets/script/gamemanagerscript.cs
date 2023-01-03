@@ -50,12 +50,12 @@ public class gamemanagerscript : MonoBehaviourPunCallbacks
                 item.GetComponent<playermovement>().alert();
             }
         }
-        if(PhotonNetwork.CurrentRoom.PlayerCount < 2)
+        if(PhotonNetwork.CurrentRoom.PlayerCount < 4)
         {
             foreach (var item in players)
             {
                 item.GetComponent<playermovement>().enabled = false;
-                item.transform.Find("Canvas/h&s/Panel jumlah p/TEXT").GetComponent<Text>().text = PhotonNetwork.CurrentRoom.PlayerCount.ToString();
+                item.transform.Find("Canvas/h&s/Panel jumlah p/TEXT").GetComponent<Text>().text = "Player : "+PhotonNetwork.CurrentRoom.PlayerCount + "/4";
             }
         }
         else
@@ -64,7 +64,6 @@ public class gamemanagerscript : MonoBehaviourPunCallbacks
             {
                 item.GetComponent<playermovement>().enabled = true;
                 item.transform.Find("Canvas/h&s/Panel jumlah p").gameObject.SetActive(false);
-                FindObjectOfType<spawnplayer>().spawningmusuh();
             }
             foreach (var item in GameObject.FindGameObjectsWithTag("hantu"))
             {
