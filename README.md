@@ -1,5 +1,15 @@
 # Find-a-Book
- 
-Survival horror multiplayer games. Player must find a book then stay alive until the time is end.
-We bring themed city building and a few scale of map to give more chance for other player to get win!
-This is still in development! So, there is only 1 room and max player can join only 4 players.
+
+3D Multiplayer horror games with FPS innit.  A player can create/join the room and wait for another player until there is 4 player in the room. There's only 1 room available for this prototype
+
+There is 1 book around the city, players must find the book and then defend it from other players. If the player survived with the book for 1 Minute, He will win the game! Watch out for ghosts who patrol around the city! HAVE FUN ^~^
+
+Game Control
+
+ WASD to Move
+Space to Jump
+LMB to Shoot 
+Hold Shift to Run
+R to Reload
+
+*Still in development
