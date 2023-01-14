@@ -11,5 +11,11 @@ Space to Jump
 LMB to Shoot 
 Hold Shift to Run
 R to Reload
+Credits 
 
-*Still in development
+Ahmad Zulfikar Umar Muhtar - Game Programmer, Sound Engineer
+Muhammad Majid Akbar - Second Game Designer, 3D Artist
+Sultan Rafie Hidayat - 3D artist
+Nicko Esha - Lead Game Designer, 3D Artist
+
+* This game is still in development
