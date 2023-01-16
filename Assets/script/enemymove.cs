@@ -16,7 +16,6 @@ public class enemymove : MonoBehaviour
     public int randomspot;
     private void Awake()
     {
-        this.enabled = false;
     }
     private void Start() {
         waittime = startwait;
