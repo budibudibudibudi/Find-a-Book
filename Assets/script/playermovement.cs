@@ -202,6 +202,11 @@ public class playermovement : MonoBehaviourPun
                 gamemanagerscript.instance.Start();
                 death();
             }
+
+            if(collision.gameObject.tag == "amo drop")
+            {
+                GetComponent<weaponplayer>().mainWeapon
+            }
         }
     }
 
@@ -238,6 +243,7 @@ public class playermovement : MonoBehaviourPun
         audioc.PlayOneShot(all[3]);
         if(health <= 0)
         {
+            PhotonNetwork.Instantiate("amodrop",this.transform.position,Quaternion.identity);
             gamemanagerscript.instance.Start();
             death();
         }

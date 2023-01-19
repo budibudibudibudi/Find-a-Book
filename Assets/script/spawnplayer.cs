@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using UnityEngine.UI;
 
 public class spawnplayer : MonoBehaviour
 {
@@ -19,8 +20,8 @@ public class spawnplayer : MonoBehaviour
     public void bangkit(GameObject _player)
     {
         Vector3 randompost = new Vector3(Random.Range(52.4f, -60.5f), 30, Random.Range(52.4f, -34.9f));
-        PhotonNetwork.Instantiate("player", randompost, Quaternion.identity);
         PhotonNetwork.Destroy(_player);
+        Instantiate(Resources.Load<GameObject>("canvas death"));
     }
     // spawn hantu
     public void spawningmusuh()
