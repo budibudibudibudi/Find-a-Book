@@ -12,6 +12,7 @@ public class gamemanagerscript : MonoBehaviourPunCallbacks
     public int rand;
     public GameObject alert;
     public bool gameStart;
+    public int maxplayer = 2;
     // Start is called before the first frame update
     void Awake()
     {
@@ -28,7 +29,7 @@ public class gamemanagerscript : MonoBehaviourPunCallbacks
     }
     public void Start()
     {
-        if(PhotonNetwork.CurrentRoom.PlayerCount == 4)
+        if(PhotonNetwork.CurrentRoom.PlayerCount == maxplayer)
         {
             waypoint = new GameObject[waypointslot.transform.childCount];
             for (int i = 0; i < waypoint.Length; i++)
@@ -50,12 +51,12 @@ public class gamemanagerscript : MonoBehaviourPunCallbacks
                 item.GetComponent<playermovement>().alert();
             }
         }
-        if(PhotonNetwork.CurrentRoom.PlayerCount < 4)
+        if(PhotonNetwork.CurrentRoom.PlayerCount < maxplayer)
         {
             foreach (var item in players)
             {
                 item.GetComponent<playermovement>().enabled = false;
-                item.transform.Find("Canvas/h&s/Panel jumlah p/TEXT").GetComponent<Text>().text = "Player : "+PhotonNetwork.CurrentRoom.PlayerCount + "/4";
+                item.transform.Find("Canvas/h&s/Panel jumlah p/TEXT").GetComponent<Text>().text = "Player : "+PhotonNetwork.CurrentRoom.PlayerCount + "/" +maxplayer;
             }
         }
         else
@@ -63,7 +64,7 @@ public class gamemanagerscript : MonoBehaviourPunCallbacks
             foreach (var item in players)
             {
                 item.GetComponent<playermovement>().enabled = true;
-                item.transform.Find("Canvas/h&s/Panel jumlah p").gameObject.SetActive(false);
+                Destroy(item.transform.Find("Canvas/h&s/Panel jumlah p").gameObject);
             }
             foreach (var item in GameObject.FindGameObjectsWithTag("hantu"))
             {

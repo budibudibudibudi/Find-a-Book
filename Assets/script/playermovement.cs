@@ -199,8 +199,15 @@ public class playermovement : MonoBehaviourPun
         {
             if (collision.gameObject.tag == "batas")
             {
-                gamemanagerscript.instance.Start();
+                if(impostor)
+                    gamemanagerscript.instance.Start();
                 death();
+            }
+
+            if(collision.gameObject.tag == "amo drop")
+            {
+                GetComponent<weaponplayer>().mainWeapon.stockmagazine += 60;
+                Destroy(collision.gameObject);
             }
         }
     }
@@ -238,7 +245,9 @@ public class playermovement : MonoBehaviourPun
         audioc.PlayOneShot(all[3]);
         if(health <= 0)
         {
-            gamemanagerscript.instance.Start();
+            PhotonNetwork.Instantiate("amodrop",this.transform.position,Quaternion.identity);
+            if(impostor)
+                gamemanagerscript.instance.Start();
             death();
         }
     }
