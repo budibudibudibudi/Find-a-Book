@@ -64,7 +64,7 @@ public class gamemanagerscript : MonoBehaviourPunCallbacks
             foreach (var item in players)
             {
                 item.GetComponent<playermovement>().enabled = true;
-                item.transform.Find("Canvas/h&s/Panel jumlah p").gameObject.SetActive(false);
+                Destroy(item.transform.Find("Canvas/h&s/Panel jumlah p").gameObject);
             }
             foreach (var item in GameObject.FindGameObjectsWithTag("hantu"))
             {

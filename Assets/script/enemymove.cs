@@ -76,12 +76,14 @@ public class enemymove : MonoBehaviour
     }
     IEnumerator jumpscare(GameObject target)
     {
-        this.transform.SetParent(target.transform.Find("jumpscare"));
+        this.transform.SetParent(target.transform.Find("cameraHolder/jumpscare"));
         this.transform.localPosition = Vector3.zero;
         target.GetComponent<playermovement>().enabled = false;
+        target.transform.Find("cameraHolder").GetComponent<mouselook>().enabled = false;
         yield return new WaitForSeconds(2);
-        target.transform.Find("jumpscare").DetachChildren();
-        gamemanagerscript.instance.Start();
+        target.transform.Find("cameraHolder/jumpscare").DetachChildren();
+        if(target.GetComponent<playermovement>().impostor)
+            gamemanagerscript.instance.Start();
         FindObjectOfType<spawnplayer>().bangkit(target);
     }
 }

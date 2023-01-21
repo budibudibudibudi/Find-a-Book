@@ -15403,7 +15403,7 @@ MonoBehaviour:
   rand: 0
   alert: {fileID: 1979258452}
   gameStart: 0
-  maxplayer: 1
+  maxplayer: 2
 --- !u!4 &1702572483
 Transform:
   m_ObjectHideFlags: 0
