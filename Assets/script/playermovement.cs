@@ -206,7 +206,7 @@ public class playermovement : MonoBehaviourPun
 
             if(collision.gameObject.tag == "amo drop")
             {
-                GetComponent<weaponplayer>().mainWeapon.stockmagazine += 100;
+                GetComponent<weaponplayer>().mainWeapon.stockmagazine += 60;
                 Destroy(collision.gameObject);
             }
         }
