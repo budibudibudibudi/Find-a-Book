@@ -12296,7 +12296,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5273354876044254651, guid: d40d682387289df469db914a37a52758, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6656209872207492223, guid: d40d682387289df469db914a37a52758, type: 3}
       propertyPath: sceneViewId
@@ -12552,7 +12552,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5273354876044254651, guid: d40d682387289df469db914a37a52758, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6656209872207492223, guid: d40d682387289df469db914a37a52758, type: 3}
       propertyPath: sceneViewId
@@ -15661,7 +15661,7 @@ MonoBehaviour:
   rand: 0
   alert: {fileID: 1979258452}
   gameStart: 0
-  maxplayer: 2
+  maxplayer: 4
   jumlahplayercanvas: {fileID: 1332453090}
 --- !u!4 &1702572483
 Transform:

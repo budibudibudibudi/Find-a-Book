@@ -85,6 +85,7 @@ public class playermovement : MonoBehaviourPun
                 {
                     pause = true;
                     pausepanel.SetActive(true);
+                    pausepanel.transform.GetChild(3).GetComponent<Text>().text = PhotonNetwork.CurrentRoom.Name;
                     Cursor.lockState = CursorLockMode.None;
                     canrun = false;
                     GetComponent<weaponplayer>().canshoot = false;

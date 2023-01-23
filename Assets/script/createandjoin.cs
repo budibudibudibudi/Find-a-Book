@@ -1,74 +1,76 @@
-﻿using System.Collections;
+﻿using UnityEngine;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using Photon.Pun;
-using UnityEngine.UI;
 using Photon.Realtime;
+using UnityEngine.UI;
 
 public class createandjoin : MonoBehaviourPunCallbacks
 {
-    public InputField input_nama;
-    public GameObject inputerror;
-    public int jumlahplayer;
+    public InputField inputnama;
+    public GameObject errorteks;
+    public GameObject table;
+    GameObject[] tables;
     private void Start()
     {
-        input_nama.characterLimit = 5;
 #if UNITY_EDITOR
         Debug.unityLogger.logEnabled = true;
 #else
   Debug.unityLogger.logEnabled = false;
 #endif
-    }
-    public void CreateRoom()
-    {
-        if (input_nama.text == "")
+        inputnama.characterLimit = 5;
+        tables = new GameObject[table.transform.childCount];
+        for (int i = 0; i < table.transform.childCount; i++)
         {
-            inputerror.SetActive(true);
-            inputerror.GetComponent<Text>().text = "NAMA TIDAK BOLEH KOSONG";
+            tables[i] = table.transform.GetChild(i).gameObject;
+        }
+        refreshui();
+    }
+
+    void refreshui()
+    {
+        for (int i = 0; i < tables.Length; i++)
+        {
+            tables[i].GetComponentInChildren<Text>().text = "Room " + i;
+        }
+    }
+
+    public void createorjoin(string nama)
+    {
+        if(inputnama.text == "")
+        {
+            errorteks.SetActive(true);
+            errorteks.GetComponent<Text>().text = "NAMA TIDAK BOLEH KOSONG";
         }
         else
         {
-            PlayerPrefs.SetString("Player_Name", input_nama.text);
-            RoomOptions roomOptions = new RoomOptions();
-            roomOptions.MaxPlayers = 4; // for example
-            PhotonNetwork.CreateRoom("a",roomOptions,null);
-        }
-    }
-    public void JoinRoom()
-    {
-        if (input_nama.text == "")
-        {
-            inputerror.SetActive(true);
-            inputerror.GetComponent<Text>().text = "NAMA TIDAK BOLEH KOSONG";
-        }
-        else
-        {
-            PlayerPrefs.SetString("Player_Name", input_nama.text);
-            PhotonNetwork.JoinRoom("a");
+            PlayerPrefs.SetString("Player_Name", inputnama.text);
+            RoomOptions room = new RoomOptions { MaxPlayers = 4 };
+            PhotonNetwork.JoinOrCreateRoom(nama, room, TypedLobby.Default);
         }
     }
     public override void OnJoinedRoom()
     {
         PhotonNetwork.LoadLevel("game");
     }
-    private void Update()
-    {
-        if(PhotonNetwork.CountOfPlayersInRooms>0)
-        {
-            GameObject.Find("Canvas/bg/create").SetActive(false);
-            GameObject.Find("Canvas/bg/join").SetActive(true);
-        }
-        else
-        {
-            GameObject.Find("Canvas/bg/create").SetActive(true);
-            GameObject.Find("Canvas/bg/join").SetActive(false);
 
-        }
-        jumlahplayer = PhotonNetwork.CountOfPlayersInRooms;
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        errorteks.SetActive(true);
+        errorteks.GetComponent<Text>().text = "ROOM FULL";
     }
 
-    public void Quit()
-    {
-        Application.Quit();
-    }
+    //public void JoinRoom()
+    //{
+    //    string roomName = roomNameInputField.text;
+    //    PhotonNetwork.JoinRoom(roomName);
+    //}
+
+    //public void CreateRoom()
+    //{
+    //    string roomName = roomNameInputField.text;
+    //    RoomOptions roomOptions = new RoomOptions { MaxPlayers = 4 };
+    //    PhotonNetwork.CreateRoom(roomName, roomOptions);
+    //}
+
 }
