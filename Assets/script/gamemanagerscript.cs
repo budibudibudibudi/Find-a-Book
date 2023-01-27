@@ -30,16 +30,12 @@ public class gamemanagerscript : MonoBehaviourPunCallbacks
     }
     public void Start()
     {
-        if(PhotonNetwork.CurrentRoom.PlayerCount == maxplayer)
-        {
-            waypoint = new GameObject[waypointslot.transform.childCount];
-            for (int i = 0; i < waypoint.Length; i++)
-                waypoint[i] = waypointslot.transform.GetChild(i).gameObject;
+        waypoint = new GameObject[waypointslot.transform.childCount];
+        for (int i = 0; i < waypoint.Length; i++)
+            waypoint[i] = waypointslot.transform.GetChild(i).gameObject;
 
-            rand = Random.Range(0, waypoint.Length);
-            PhotonNetwork.InstantiateRoomObject(buku.transform.name, waypoint[rand].transform.position, waypoint[rand].transform.rotation);
-        }
-        
+        rand = Random.Range(0, waypoint.Length);
+        PhotonNetwork.InstantiateRoomObject(buku.transform.name, waypoint[rand].transform.position, waypoint[rand].transform.rotation);
     }
 
     private void Update()

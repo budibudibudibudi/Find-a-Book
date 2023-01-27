@@ -82,8 +82,10 @@ public class enemymove : MonoBehaviour
         target.transform.Find("cameraHolder").GetComponent<mouselook>().enabled = false;
         yield return new WaitForSeconds(2);
         target.transform.Find("cameraHolder/jumpscare").DetachChildren();
-        if(target.GetComponent<playermovement>().impostor)
+        if(target.GetComponent<playermovement>().view.IsMine)
+        {
             gamemanagerscript.instance.Start();
+        }    
         FindObjectOfType<spawnplayer>().bangkit(target);
     }
 }
