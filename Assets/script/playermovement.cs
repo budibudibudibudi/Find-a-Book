@@ -85,6 +85,7 @@ public class playermovement : MonoBehaviourPun
                 {
                     pause = true;
                     pausepanel.SetActive(true);
+                    pausepanel.transform.GetChild(3).GetComponent<Text>().text = PhotonNetwork.CurrentRoom.Name;
                     Cursor.lockState = CursorLockMode.None;
                     canrun = false;
                     GetComponent<weaponplayer>().canshoot = false;
@@ -199,8 +200,6 @@ public class playermovement : MonoBehaviourPun
         {
             if (collision.gameObject.tag == "batas")
             {
-                if(impostor)
-                    gamemanagerscript.instance.Start();
                 death();
             }
 
@@ -246,8 +245,6 @@ public class playermovement : MonoBehaviourPun
         if(health <= 0)
         {
             PhotonNetwork.Instantiate("amodrop",this.transform.position,Quaternion.identity);
-            if(impostor)
-                gamemanagerscript.instance.Start();
             death();
         }
     }
@@ -263,9 +260,18 @@ public class playermovement : MonoBehaviourPun
             return;
         if(impostor)
         {
-            _timer.enabled = false;
+            view.RPC("spawnbuku", RpcTarget.All);
+            PhotonNetwork.Instantiate(gamemanagerscript.instance.buku.name, new Vector3(0, 0.1f, 0), Quaternion.identity);
+            gamemanagerscript.instance.gameStart = false;
         }
         FindObjectOfType<spawnplayer>().bangkit(this.gameObject);
+    }
+    [PunRPC]
+    void spawnbuku()
+    {
+        if (!view.IsMine)
+            return;
+        _timer.enabled = false;
     }
 
     public void alert()
@@ -288,7 +294,10 @@ public class playermovement : MonoBehaviourPun
         }
         StartCoroutine(gamemanagerscript.instance.shoutalert());
         _timer.enabled = true;
-        PhotonNetwork.Destroy(GameObject.FindGameObjectWithTag("buku"));
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+        else
+            PhotonNetwork.Destroy(GameObject.FindGameObjectWithTag("buku").gameObject);
         gamemanagerscript.instance.gameStart = false;
 
     }

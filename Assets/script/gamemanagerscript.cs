@@ -13,6 +13,7 @@ public class gamemanagerscript : MonoBehaviourPunCallbacks
     public GameObject alert;
     public bool gameStart;
     public int maxplayer = 2;
+    public GameObject jumlahplayercanvas;
     // Start is called before the first frame update
     void Awake()
     {
@@ -29,16 +30,12 @@ public class gamemanagerscript : MonoBehaviourPunCallbacks
     }
     public void Start()
     {
-        if(PhotonNetwork.CurrentRoom.PlayerCount == maxplayer)
-        {
-            waypoint = new GameObject[waypointslot.transform.childCount];
-            for (int i = 0; i < waypoint.Length; i++)
-                waypoint[i] = waypointslot.transform.GetChild(i).gameObject;
+        waypoint = new GameObject[waypointslot.transform.childCount];
+        for (int i = 0; i < waypoint.Length; i++)
+            waypoint[i] = waypointslot.transform.GetChild(i).gameObject;
 
-            rand = Random.Range(0, waypoint.Length);
-            PhotonNetwork.InstantiateRoomObject(buku.transform.name, waypoint[rand].transform.position, waypoint[rand].transform.rotation);
-        }
-        
+        rand = Random.Range(0, waypoint.Length);
+        PhotonNetwork.InstantiateRoomObject(buku.transform.name, waypoint[rand].transform.position, waypoint[rand].transform.rotation);
     }
 
     private void Update()
@@ -56,7 +53,8 @@ public class gamemanagerscript : MonoBehaviourPunCallbacks
             foreach (var item in players)
             {
                 item.GetComponent<playermovement>().enabled = false;
-                item.transform.Find("Canvas/h&s/Panel jumlah p/TEXT").GetComponent<Text>().text = "Player : "+PhotonNetwork.CurrentRoom.PlayerCount + "/" +maxplayer;
+                jumlahplayercanvas.transform.GetChild(0).GetChild(0).GetComponent<Text>().text = "Player : " + PhotonNetwork.CurrentRoom.PlayerCount + "/" + maxplayer;
+                //item.transform.Find("Canvas/h&s/Panel jumlah p/TEXT").GetComponent<Text>().text = "Player : "+PhotonNetwork.CurrentRoom.PlayerCount + "/" +maxplayer;
             }
         }
         else
@@ -64,7 +62,8 @@ public class gamemanagerscript : MonoBehaviourPunCallbacks
             foreach (var item in players)
             {
                 item.GetComponent<playermovement>().enabled = true;
-                Destroy(item.transform.Find("Canvas/h&s/Panel jumlah p").gameObject);
+                Destroy(jumlahplayercanvas);
+                //Destroy(item.transform.Find("Canvas/h&s/Panel jumlah p").gameObject);
             }
             foreach (var item in GameObject.FindGameObjectsWithTag("hantu"))
             {

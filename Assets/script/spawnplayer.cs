@@ -24,12 +24,12 @@ public class spawnplayer : MonoBehaviour
         Instantiate(Resources.Load<GameObject>("canvas death"));
     }
     // spawn hantu
-    public void spawningmusuh()
-    {
-        for (int i = 0; i < 2; i++)
-        {
-            int rand = Random.Range(0, spawnposmusuh.Length);
-            PhotonNetwork.InstantiateRoomObject(musuh.name, spawnposmusuh[rand].position, Quaternion.identity);
-        }
-    }
+    //public void spawningmusuh()
+    //{
+    //    for (int i = 0; i < 2; i++)
+    //    {
+    //        int rand = Random.Range(0, spawnposmusuh.Length);
+    //        PhotonNetwork.InstantiateRoomObject(musuh.name, spawnposmusuh[rand].position, Quaternion.identity);
+    //    }
+    //}
 }
